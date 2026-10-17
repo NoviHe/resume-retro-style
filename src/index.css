@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #07090e;
+    color: #c9d1d9;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08), transparent 45%),
+      linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 36px 36px, 36px 36px;
+    background-position: 0 0, -1px -1px, -1px -1px;
+  }
+
+  /* Custom Cyber Scrollbar */
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #07090e;
+    border-left: 1px solid #141b2d;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #00f0ff;
+    box-shadow: 0 0 8px #00f0ff;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff007f;
+    box-shadow: 0 0 10px #ff007f;
+  }
+}
+
+/* CRT Scanlines Overlay */
+.scanlines-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.35) 50%
+  );
+  background-size: 100% 4px;
+  opacity: 0.55;
+}
+
+/* Cyber Angled Cut Corners */
+.clip-cyber-corner {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+}
+
+.clip-cyber-tag {
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+.clip-cyber-btn {
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+/* Retro HUD grid effect */
+.cyber-hud-border {
+  border: 1px solid #1f2b48;
+  position: relative;
+}
+.cyber-hud-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #00f0ff;
+  border-left: 2px solid #00f0ff;
+}
+.cyber-hud-border::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #00f0ff;
+  border-right: 2px solid #00f0ff;
+}
+
+/* Glitch effect on hover or keyframes */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+.glitch-text:hover::before,
+.glitch-text:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.glitch-text:hover::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff007f;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+.glitch-text:hover::after {
+  left: -2px;
+  text-shadow: -2px 0 #00f0ff;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip: rect(10px, 9999px, 40px, 0); }
+  25% { clip: rect(60px, 9999px, 80px, 0); }
+  50% { clip: rect(20px, 9999px, 50px, 0); }
+  75% { clip: rect(70px, 9999px, 100px, 0); }
+  100% { clip: rect(30px, 9999px, 60px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(70px, 9999px, 100px, 0); }
+  25% { clip: rect(15px, 9999px, 45px, 0); }
+  50% { clip: rect(50px, 9999px, 75px, 0); }
+  75% { clip: rect(25px, 9999px, 55px, 0); }
+  100% { clip: rect(80px, 9999px, 110px, 0); }
+}
+
+/* Terminal blink cursor */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
