@@ -179,22 +179,6 @@ export const resumeData = {
       type: "education",
       desc: "Mempelajari algoritma pemrograman, rekayasa web (PHP & MySQL), OOP, pengembangan aplikasi desktop, dan arsitektur database relasional.",
       badge: "GRADUATED"
-    },
-    {
-      year: "2014 - 2017",
-      title: "SMP Negeri 2 Padaherang",
-      organization: "Pendidikan Menengah Pertama",
-      type: "education",
-      desc: "Menempuh pendidikan dasar menengah dan mulai mengeksplorasi minat dalam dunia komputer dan teknologi informasi.",
-      badge: "COMPLETED"
-    },
-    {
-      year: "2008 - 2014",
-      title: "SD Negeri 2 Ciganjeng",
-      organization: "Pendidikan Dasar",
-      type: "education",
-      desc: "Menyelesaikan pendidikan dasar di Ciganjeng, Padaherang, Pangandaran.",
-      badge: "COMPLETED"
     }
   ] as TimelineItem[],
 
