@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Eye } from 'lucide-react';
+import { ExternalLink, Eye, ChevronDown, ChevronUp } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { resumeData } from '../data/resumeData';
 import type { ProjectItem } from '../data/resumeData';
@@ -9,10 +9,14 @@ import { GithubIcon } from './GithubIcon';
 export const CyberProjects: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<'ALL' | 'laravel' | 'php' | 'kotlin' | 'iot'>('ALL');
   const [modalProject, setModalProject] = useState<ProjectItem | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const filteredProjects = selectedFilter === 'ALL'
     ? resumeData.projects
     : resumeData.projects.filter((p) => p.category === selectedFilter);
+
+  // Limit display to 3 initially, allow expanding the rest
+  const displayedProjects = isExpanded ? filteredProjects : filteredProjects.slice(0, 3);
 
   const filters = [
     { label: 'ALL_SYSTEMS', key: 'ALL', count: resumeData.projects.length },
@@ -47,6 +51,7 @@ export const CyberProjects: React.FC = () => {
                 onClick={() => {
                   sound.playClick();
                   setSelectedFilter(f.key as typeof selectedFilter);
+                  setIsExpanded(false);
                 }}
                 className={`px-3 py-1.5 rounded transition-all flex items-center space-x-1.5 ${
                   selectedFilter === f.key
@@ -61,9 +66,9 @@ export const CyberProjects: React.FC = () => {
           </div>
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid (Limited to 3 or all when expanded) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
+          {displayedProjects.map((project) => (
             <div
               key={project.id}
               className="bg-[#0b101c] border border-[#1b253b] hover:border-[#00f0ff] rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-neon-cyan flex flex-col justify-between group cyber-hud-border"
@@ -167,6 +172,30 @@ export const CyberProjects: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Expand / Collapse Button if total projects > 3 */}
+        {filteredProjects.length > 3 && (
+          <div className="mt-10 flex justify-center">
+            <button
+              onClick={() => {
+                sound.playClick();
+                setIsExpanded(!isExpanded);
+              }}
+              className="clip-cyber-btn px-6 py-3 bg-[#0d1527] border-2 border-[#00f0ff] hover:bg-[#00f0ff] text-[#00f0ff] hover:text-black font-display font-bold text-xs uppercase tracking-wider rounded transition-all shadow-neon-cyan flex items-center space-x-2 group cursor-pointer"
+            >
+              <span>
+                {isExpanded
+                  ? 'COLLAPSE ARCHIVES [SHOW TOP 3]'
+                  : `EXPAND MORE ARCHIVES (+${filteredProjects.length - 3} PROJECTS)`}
+              </span>
+              {isExpanded ? (
+                <ChevronUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+              ) : (
+                <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+              )}
+            </button>
+          </div>
+        )}
 
       </div>
 
